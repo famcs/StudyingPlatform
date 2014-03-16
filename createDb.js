@@ -9,9 +9,18 @@ UserModel.remove({}, function(err) {
     var user = new UserModel({
         username: "user",
         password: "user",
-        role: "admin"
+        roles: ["user"]
+    });
+    var admin = new UserModel({
+        username: "admin",
+        password: "admin",
+        roles: ["user", "admin"]
     });
     user.save(function(err, user) {
+        if (err) return log.error(err);
+        else log.info("New user - %s:%s", user.username, user.password);
+    });
+    admin.save(function(err, user) {
         if (err) return log.error(err);
         else log.info("New user - %s:%s", user.username, user.password);
     });

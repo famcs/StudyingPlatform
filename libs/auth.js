@@ -82,7 +82,7 @@ passport.use(new BearerStrategy(
                 }
 
                 var info = {
-                    scope: user.role
+                    scope: user.roles
                 }
                 done(null, user, info);
             });
@@ -92,7 +92,7 @@ passport.use(new BearerStrategy(
 
 var checkRole = function(role) {
     return function(req, res, next) {
-        if (req.authInfo.scope != role) {
+        if (req.authInfo.scope.indexOf(role) == -1) {
             res.statusCode = 403;
             return res.end('Forbidden');
         }
