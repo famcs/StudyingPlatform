@@ -10,7 +10,7 @@ factory('loginService', function($http) {
 
     var loginAPI = {};
 
-    loginAPI.signIn = function(user) {
+    loginAPI.signIn = function(user, onSuccess, onError) {
         $http.post(
             '/oauth2/token', {
                 grant_type: "password",
@@ -23,9 +23,11 @@ factory('loginService', function($http) {
             // a successful response will return
             // the "bearer" token which is registered
             // to the $httpProvider
-            $http.defaults.headers.common.Authorization = "Bearer " + response.access_token
+            $http.defaults.headers.common.Authorization = "Bearer " + response.access_token;
+            onSuccess();
         }).error(function(response) {
             // error handling to some meaningful extent
+            onError();
         })
         //return $http.post('/login', user);
         return "";

@@ -6,24 +6,23 @@ angular.module('myApp.controllers', []).
 controller('LoginCtrl', ['$scope', '$location', 'loginService',
     function($scope, $location, loginService) {
         $scope.signIn = function(user) {
-            loginService.signIn(user);
-
-            /*.success(function(response) {
-                if (response == "success") {
-                    $location.path("dashboard");
-                } else {
-                    alert("ERROR");
-                }
-            });*/
+            var onSuccess = function() {
+                $location.path("dashboard");
+            }
+            var onError = function() {
+                alert("ERROR");
+            }
+            loginService.signIn(user, onSuccess, onError);
         }
     }
 ]).
-controller('DashboardCtrl', ['$scope', 'userService',
-    function($scope, userService) {
+controller('DashboardCtrl', ['$scope', '$location', 'userService',
+    function($scope, $location, userService) {
         userService.getUserInfo().success(function(response) {
             $scope.username = response.username;
         }).error(function(response) {
-            // error handling to some meaningful extent
+            $location.path("login");
+            alert("Forbidden");
         })
 
     }
