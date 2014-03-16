@@ -82,10 +82,22 @@ passport.use(new BearerStrategy(
                 }
 
                 var info = {
-                    scope: '*'
+                    scope: user.role
                 }
                 done(null, user, info);
             });
         });
     }
 ));
+
+var checkRole = function(role) {
+    return function(req, res, next) {
+        if (req.authInfo.scope != role) {
+            res.statusCode = 403;
+            return res.end('Forbidden');
+        }
+        return next();
+    }
+}
+
+module.exports.checkRole = checkRole;

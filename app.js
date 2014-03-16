@@ -15,7 +15,7 @@ var oauth2 = require('./libs/oauth2');
 
 //var db = require('./lib/mongoose');
 
-require('./libs/auth');
+var auth = require('./libs/auth');
 
 var app = express();
 
@@ -44,6 +44,7 @@ app.get('/api/userInfo',
     passport.authenticate('bearer', {
         session: false
     }),
+    auth.checkRole('admin'),
     user.getUserInfo
 );
 /*

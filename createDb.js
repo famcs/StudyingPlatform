@@ -8,7 +8,8 @@ var RefreshTokenModel = require('./libs/mongoose').RefreshTokenModel;
 UserModel.remove({}, function(err) {
     var user = new UserModel({
         username: "user",
-        password: "user"
+        password: "user",
+        role: "admin"
     });
     user.save(function(err, user) {
         if (err) return log.error(err);
