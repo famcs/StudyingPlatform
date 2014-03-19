@@ -30,7 +30,12 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(passport.initialize());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'app')));
+app.use('/static', express.static(path.join(__dirname, 'app')));
+app.set('views', __dirname + '/app');
+app.set("view options", {
+    layout: false
+});
+app.engine('html', require('ejs').renderFile);
 
 // development only
 if ('development' == app.get('env')) {
@@ -39,7 +44,6 @@ if ('development' == app.get('env')) {
 
 app.post('/oauth2/token', oauth2.token);
 
-app.get('/', index.index);
 app.get('/api/userInfo',
     passport.authenticate('bearer', {
         session: false
@@ -47,6 +51,7 @@ app.get('/api/userInfo',
     auth.checkRole('admin'),
     user.getUserInfo
 );
+app.get(/^(?!\/static\/).*$/, index.index);
 /*
 app.get('/home', user.check, user.home);
 app.get('/home/:user', user.check, user.home);

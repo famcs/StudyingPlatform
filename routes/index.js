@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.redirect('/index.html');
+  res.render('index.html');
 };
