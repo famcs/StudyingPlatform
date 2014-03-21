@@ -2,7 +2,6 @@
 
 /* Services */
 
-
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('myApp.services', []).
@@ -33,6 +32,16 @@ factory('authService', function($http) {
                 onError();
             })
             return "";
+        },
+        signUp: function(user, onSuccess, onError) {
+            $http.post('/registration', {user: user})
+            .success(function (response) {
+                onSuccess();
+            })
+            .error(function (response) {
+                onError();
+            })
+            return  "";
         },
         signOut: function() {
             currentUser = null;

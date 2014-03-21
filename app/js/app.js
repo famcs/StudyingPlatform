@@ -15,6 +15,10 @@ config(['$routeProvider', '$locationProvider',
             templateUrl: 'static/html/signin.html',
             controller: 'SignInCtrl'
         });
+        $routeProvider.when('/signup', {
+            templateUrl: 'static/html/signup.html',
+            controller: 'SignUpCtrl'
+        });
         $routeProvider.when('/signout', {
             template: "",
             controller: 'SignOutCtrl'

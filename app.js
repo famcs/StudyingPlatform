@@ -44,6 +44,8 @@ if ('development' == app.get('env')) {
 
 app.post('/oauth2/token', oauth2.token);
 
+app.post('/registration', user.signUp);
+
 app.get('/api/userInfo',
     passport.authenticate('bearer', {
         session: false
