@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-controller('LoginCtrl', ['$scope', '$location', 'loginService',
-    function($scope, $location, loginService) {
+controller('LoginCtrl', ['$scope', '$location', 'authService',
+    function($scope, $location, authService) {
         $scope.signIn = function(user) {
             var onSuccess = function() {
                 $location.path("dashboard");
@@ -12,18 +12,14 @@ controller('LoginCtrl', ['$scope', '$location', 'loginService',
             var onError = function() {
                 alert("ERROR");
             }
-            loginService.signIn(user, onSuccess, onError);
+            authService.signIn(user, onSuccess, onError);
         }
     }
 ]).
-controller('DashboardCtrl', ['$scope', '$location', 'userService',
-    function($scope, $location, userService) {
-        userService.getUserInfo().success(function(response) {
-            $scope.username = response.username;
-        }).error(function(response) {
+controller('DashboardCtrl', ['$scope', '$location', 'authService',
+    function($scope, $location, authService) {
+        if (!authService.checkRole('admin')) { // TODO: fix role to 'user' later
             $location.path("login");
-            alert("Forbidden");
-        })
-
+        }
     }
 ]);
