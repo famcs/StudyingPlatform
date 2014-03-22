@@ -11,13 +11,21 @@ angular.module('myApp', [
 ]).
 config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
-        $routeProvider.when('/login', {
-            templateUrl: 'static/html/login.html',
-            controller: 'LoginCtrl'
+        $routeProvider.when('/signin', {
+            templateUrl: 'static/html/signin.html',
+            controller: 'SignInCtrl'
+        });
+        $routeProvider.when('/signout', {
+            template: "",
+            controller: 'SignOutCtrl'
         });
         $routeProvider.when('/dashboard', {
             templateUrl: 'static/html/dashboard.html',
             controller: 'DashboardCtrl'
+        });
+        $routeProvider.when('/', {
+            templateUrl: 'static/html/home.html',
+            controller: 'HomeCtrl'
         });
         $routeProvider.otherwise({
             redirectTo: '/'
@@ -27,8 +35,8 @@ config(['$routeProvider', '$locationProvider',
 ]).
 controller('MainCtrl', ['$scope', 'authService',
     function($scope, authService) {
-        $scope.$watch(authService.isLoggedIn, function(isLoggedIn) {
-            $scope.isLoggedIn = isLoggedIn;
+        $scope.$watch(authService.isSignedIn, function(isSignedIn) {
+            $scope.isSignedIn = isSignedIn;
             $scope.currentUser = authService.currentUser();
             $scope.checkRole = authService.checkRole;
         });

@@ -34,7 +34,10 @@ factory('authService', function($http) {
             })
             return "";
         },
-        isLoggedIn: function() {
+        signOut: function() {
+            currentUser = null;
+        },
+        isSignedIn: function() {
             return currentUser != null;
         },
         currentUser: function() {
